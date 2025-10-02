@@ -75,7 +75,7 @@
 
 /* Scrollable and hidden scrollbar container */
 #scene-menu {
-    position: fixed;           /* Ensures it stays in place while scrolling */
+    position: absolute;           /* Ensures it stays in place while scrolling */
     top: 40px;                 /* Optional: position from top */
     right: 30px;  
 
@@ -85,6 +85,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     font-family: 'Poppins', sans-serif;
+    z-index: 10000;  
 
     
 }
@@ -1715,6 +1716,18 @@ document.getElementById('zoom-out').addEventListener('click', function(e) {
 document.getElementById('fullscreen').addEventListener('click', function(e) {
     viewer.toggleFullscreen();
 });
+
+document.addEventListener("fullscreenchange", () => {
+    const menu = document.getElementById("scene-menu");
+    const pannellumContainer = document.querySelector(".pnlm-container");
+
+    if (document.fullscreenElement) {
+        pannellumContainer.appendChild(menu);  // Move menu into fullscreen container
+    } else {
+        document.body.appendChild(menu);       // Move it back on exit
+    }
+});
+
 </script>
 
 // Enhanced Image Preloader with Loading Screen
